@@ -126,7 +126,10 @@ class Application(tk.Frame):
             self.entries[i].pack(side="top")
  
         Button = tk.Button(frame_3, text="Press To Add", width=15, background="#42dcf4", command=self.add_button, font=("Times New Roman", 15))
-        Button.pack(side="top", ipady=(5))
+        Button.pack(side="bottom", ipady=(5))
+
+        Button_1 = tk.Button(frame_3, text="Import list", width=15, background="#f5fc92", command=self.add_list, font=("Times New Roman", 15), fg="red")
+        Button_1.pack(side="top", ipady=(5), pady=(20))
 
     def add_button(self):
         list_new = self.a.display_columns()
@@ -144,6 +147,11 @@ class Application(tk.Frame):
         else:
             self.a
             tkMessageBox.showinfo("Success!", "Your data has been entered")
+
+    def add_list(self):    ##work in progress
+        new_csv= tkFileBox.askopenfile(title="Please select a csv file", filetypes=[("CSV Files", "*.csv")])
+        csv_file = open_csv(new_csv)
+        print(csv_file.display_columns())
 
     def export_to_excel(self):
         try:
@@ -222,7 +230,7 @@ class open_csv():
         list_new= []
         for test in list(self.everything.columns.values):
             list_new.append("%s"%test) 
-        return list_new
+        return list_new                                 ##displays columns in the csv
 
 
     def display_excel(self):    #creates a list using the columns it looks up the values in the columns and seperates them into seperate arrays
@@ -255,9 +263,9 @@ class to_Excel():
 
     def display_columns(self):
         list_new = []
-        for i in self.actual_excel.columns.values:
+        for i in self.actual_excel.columns.values:       
             list_new.append(i)
-        return list_new
+        return list_new                                         ##returns list that shows all the column names
 
     def new_excel(self, excel_file):                         #This creates a new excel file copy of the file chosen
         shutil.copy(self.excel_name, excel_file)
